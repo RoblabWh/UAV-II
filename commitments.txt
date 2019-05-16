@@ -1,0 +1,8 @@
+Author	:	Marc
+Date	:	07.05.2019
+Title	:	Branching Struct2DepthPointCloud
+
+ADD	:	Working Directory
+ADD	:	Adjusted Struct2Depth Code in Thirdparty folder (Adjusted by Artur)
+ADD	:	struct2depth_visualizer.py and npyDepthImageToPintCloud.py in Scripts folder
+ADD	:	struct2Depth Test Data ind Data folder
