@@ -1,0 +1,4 @@
+cd tensorflow/models/research/struct2depth/
+
+python3 inference.py --logtostderr --file_extension png --depth --egomotion true --input_dir /home/asy-user/Bilder/Labortest/ --output_dir /home/asy-user/Bilder/Output/ --model_ckpt ./models/cityscapes/model-154688
+
