@@ -1,8 +1,13 @@
-Author	:	Marc
-Date	:	07.05.2019
-Title	:	Branching Struct2DepthPointCloud
-
-ADD	:	Working Directory
-ADD	:	Adjusted Struct2Depth Code in Thirdparty folder (Adjusted by Artur)
-ADD	:	struct2depth_visualizer.py and npyDepthImageToPintCloud.py in Scripts folder
-ADD	:	struct2Depth Test Data ind Data folder
+CHANGE	:	Renamed Branch Struct2DepthPointcloud to Evaluation_PCL_Depth
+CHANGE	:	New File structure -
+		datasets outsourced;
+		large data outsourced (eg eval output or checkpoint files);
+		Eval and Models folder created but only to be used for local expansion (dont push big data);
+		Src and Eval and Docker separated;
+CHANGE	:	The docker containers now start from a point in the filesystem that is the point of interest in the UAV-directory (changed in run.sh)
+ADD	:	Dockerfiles and Code for evaluation tasks - Densedepth_pyqt, NN Depth comparison, TensorRT, DenseDepth TensorRT, Scaling Evaluation DenseDepth, UAV2_ALL
+ADD	:	Dockerfiles for monodepth2 and struct2depth
+ADD	:	Script for camera calibration (especially on Tello Videostream)
+ADD	:	Calibration file for Tello Camera
+REMOVED :	Thirdparty - struct2depth (separated from github repo)
+REMOVED :	Script npyDepthImageToPointCloud (separated from github repo)

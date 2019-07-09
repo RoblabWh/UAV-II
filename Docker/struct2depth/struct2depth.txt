@@ -1,0 +1,16 @@
+#TODO change
+input_dir="/home/gas/host/docker/struct2depth/images"
+output_dir="/home/gas/host/docker/struct2depth/output"
+#
+
+model_checkpoint="${PWD}/../../Eval/struct2depth/models/S2D_KittiModel/model-199160"
+#model_checkpoint="${PWD}/../../Eval/struct2depth/models/S2D_CS_Modell/model-154688"
+
+python3 inference.py \
+    --logtostderr \
+    --file_extension png \
+    --depth \
+    --egomotion true \
+    --input_dir $input_dir \
+    --output_dir $output_dir \
+    --model_ckpt $model_checkpoint
