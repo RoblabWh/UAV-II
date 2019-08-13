@@ -18,6 +18,7 @@ class Tello:
         self.cmd_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # socket for sending cmd
         self.video_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # socket for receiving video stream
         self.tello_address = (tello_ip, tello_port)
+        self.tello_ip = tello_ip
         self.local_video_port = 11111  # port for receiving video stream
         self.last_height = 0
         self.cmd_socket.bind((local_ip, local_port))
@@ -49,9 +50,7 @@ class Tello:
     def _receive_video_thread(self):
         """
         Listens for video streaming (raw h264) from the Tello.
-
         Runs as a thread, sets self.frame to the most recent frame Tello captured.
-
         """
         write_to_log("Videostream thread started")
         packet_data = ""
@@ -74,9 +73,7 @@ class Tello:
     def _h264_decode(self, packet_data):
         """
         decode raw h264 format data from Tello
-
         :param packet_data: raw h264 data array
-
         :return: a list of decoded frame
         """
         res_frame_list = []
@@ -96,3 +93,11 @@ class Tello:
     def read(self):
         """Return the last frame from camera."""
         return self.frame
+
+    def send_command(self, command):
+        """
+        Send a command to the Tello.
+        :param command: (str) the command to send
+        """
+        self.cmd_socket.sendto(command.encode('utf-8'), self.tello_address)
+        write_to_log('sending command: %s to %s' % (command, self.tello_ip))

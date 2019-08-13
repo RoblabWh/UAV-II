@@ -8,7 +8,7 @@ import numpy as np
 
 class videostream:
 
-    def __init__(self,tello):
+    def __init__(self, tello):
 
 
         self.tello = tello # videostream device
