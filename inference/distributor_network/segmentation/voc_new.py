@@ -7,6 +7,7 @@ import numpy as np
 import torch
 import time
 import socket
+import argparse
 
 #import torch
 #from torch2trt import torch2trt
@@ -25,7 +26,7 @@ voc_dataset = {"background" : True, "aeroplane": True, "bicycle": True, "bird": 
                "person": True, "pottedplant": True, "sheep": True, "sofa": True, "train": True, "tvmonitor": True}
 
 class SemanticSegmentation:
-    def __init__(self, cmap='cmap.npy', modelName='voc50', host_ip='192.168.178.41', port=5555):
+    def __init__(self, cmap='cmap.npy', modelName='voc50', host_ip='127.0.0.1', port=5555):
         print('constructor called')
         self.cmap = np.load(cmap)
         self.cuda = torch.cuda.is_available()
@@ -100,14 +101,19 @@ class SemanticSegmentation:
 
     def listener(self, alpha=0.3):
         listen = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        listen.settimeout(2)
         server_adress = (self.host_ip, self.port)
         beta = (1.0 - alpha)
         while (True):
             start_time = int(round(time.time() * 1000))
-            print("Try to recv...")
-            sent = listen.sendto("get".encode('utf-8'), server_adress)
-            data, server = listen.recvfrom(65507)
+            printf("PascalVoc: Try to recv...")
+            try:
+                sent = listen.sendto("get".encode('utf-8'), server_adress)
+                data, server = listen.recvfrom(65507)
             # Error Msg weggelassen
+            except:
+                print("PascalVoc: Timeout...")
+                continue
 
             array = np.frombuffer(data, dtype=np.dtype('uint8'))
             image = cv2.imdecode(array, 1)
@@ -257,7 +263,13 @@ class SemanticSegmentation:
 
 
 def main():
-    voc = SemanticSegmentation()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model', type=int, default=101)
+    parser.add_argument('--scale_factor', type=float, default=0.7125)
+    parser.add_argument('--host_ip', type=str, default=None)
+    parser.add_argument('--port', type=int, default=None)
+    args = parser.parse_args()
+    voc = SemanticSegmentation(host_ip=args.host_ip, port=args.port)
     voc.filter(voc_dataset)
     #voc.testImage()
     #voc.showWebcam()

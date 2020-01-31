@@ -6,23 +6,20 @@ import argparse
 import posenet
 import time
 import socket
+import numpy as np
 
-HOST_IP='192.168.178.41'
-PORT=5555
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=int, default=101)
-parser.add_argument('--cam_id', type=int, default=0)
-parser.add_argument('--cam_width', type=int, default=1280)
-parser.add_argument('--cam_height', type=int, default=720)
 parser.add_argument('--scale_factor', type=float, default=0.7125)
-parser.add_argument('--file', type=str, default=None, help="Optionally use a video file instead of a live camera")
+parser.add_argument('--host_ip', type=str, default=None)
+parser.add_argument('--port', type=int, default=None)
 args = parser.parse_args()
 
 
 def main():
     listen = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    server_adress = (HOST_IP, PORT)
+    server_adress = (args.host_ip, args.port)
 
     
     config = tf.ConfigProto()
@@ -43,14 +40,19 @@ def main():
         
         while True:
             start_time = int(round(time.time() * 1000))
-            sent = listen.sendto("get".encode('utf-8'), server_adress)
-            data, server = listen.recvfrom(65507)
+            printf("PoseNet: Try to recv...")
+            try:
+                sent = listen.sendto("get".encode('utf-8'), server_adress)
+                data, server = listen.recvfrom(65507)
             # Error Msg weggelassen
+            except:
+                print("PoseNet: Timeout...")
+                continue
+
             array = np.frombuffer(data, dtype=np.dtype('uint8'))
             cap = cv2.imdecode(array, 1)
             
-            input_image, display_image, output_scale = posenet.read_cap(
-                cap, scale_factor=args.scale_factor, output_stride=output_stride)
+            input_image, display_image, output_scale = posenet.process(cap, scale_factor=args.scale_factor, output_stride=output_stride)
 
             heatmaps_result, offsets_result, displacement_fwd_result, displacement_bwd_result = sess.run(
                 model_outputs,
@@ -73,9 +75,10 @@ def main():
                 display_image, pose_scores, keypoint_scores, keypoint_coords,
                 min_pose_score=0.15, min_part_score=0.1)
 
-            cv2.namedWindow("posenet", cv2.WND_PROP_FULLSCREEN)
-            cv2.setWindowProperty("posenet",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
-            cv2.imshow("posenet", overlay_image)
+            #cv2.namedWindow("posenet", cv2.WND_PROP_FULLSCREEN)
+            #cv2.setWindowProperty("posenet",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
+            #cv2.imshow("posenet", overlay_image)
+            cv2.imshow("PoseNet", overlay_image)
             end_time = int(round(time.time() * 1000))
             frame_count += 1
             if cv2.waitKey(1) & 0xFF == ord('q'):
