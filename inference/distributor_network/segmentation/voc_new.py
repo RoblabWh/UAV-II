@@ -25,7 +25,7 @@ voc_dataset = {"background" : True, "aeroplane": True, "bicycle": True, "bird": 
                "person": True, "pottedplant": True, "sheep": True, "sofa": True, "train": True, "tvmonitor": True}
 
 class SemanticSegmentation:
-    def __init__(self, cmap='cmap.npy', modelName='voc50', host_ip='172.16.35.169', port=5555):
+    def __init__(self, cmap='cmap.npy', modelName='voc50', host_ip='192.168.178.41', port=5555):
         print('constructor called')
         self.cmap = np.load(cmap)
         self.cuda = torch.cuda.is_available()
@@ -104,6 +104,7 @@ class SemanticSegmentation:
         beta = (1.0 - alpha)
         while (True):
             start_time = int(round(time.time() * 1000))
+            print("Try to recv...")
             sent = listen.sendto("get".encode('utf-8'), server_adress)
             data, server = listen.recvfrom(65507)
             # Error Msg weggelassen
@@ -260,8 +261,8 @@ def main():
     voc.filter(voc_dataset)
     #voc.testImage()
     #voc.showWebcam()
-    #voc.listener()
-    voc.saveVideo()
+    voc.listener()
+    #voc.saveVideo()
 
 
 if __name__== "__main__":
