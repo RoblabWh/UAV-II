@@ -4,8 +4,11 @@ import time
 import argparse
 
 import posenet
+import time
+import socket
 
-
+HOST_IP='192.168.178.41'
+PORT=5555
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=int, default=101)
@@ -18,22 +21,34 @@ args = parser.parse_args()
 
 
 def main():
+    listen = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    server_adress = (HOST_IP, PORT)
+
+    
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
     with tf.Session(config=config) as sess:
         model_cfg, model_outputs = posenet.load_model(args.model, sess)
         output_stride = model_cfg['output_stride']
 
-        if args.file is not None:
-            cap = cv2.VideoCapture(args.file)
-        else:
-            cap = cv2.VideoCapture(args.cam_id)
-        cap.set(3, args.cam_width)
-        cap.set(4, args.cam_height)
+        #if args.file is not None:
+        #    cap = cv2.VideoCapture(args.file)
+        #else:
+        #    cap = cv2.VideoCapture(args.cam_id)
+        #cap.set(3, args.cam_width)
+        #cap.set(4, args.cam_height)
 
         start = time.time()
         frame_count = 0
+        
         while True:
+            start_time = int(round(time.time() * 1000))
+            sent = listen.sendto("get".encode('utf-8'), server_adress)
+            data, server = listen.recvfrom(65507)
+            # Error Msg weggelassen
+            array = np.frombuffer(data, dtype=np.dtype('uint8'))
+            cap = cv2.imdecode(array, 1)
+            
             input_image, display_image, output_scale = posenet.read_cap(
                 cap, scale_factor=args.scale_factor, output_stride=output_stride)
 
@@ -61,12 +76,13 @@ def main():
             cv2.namedWindow("posenet", cv2.WND_PROP_FULLSCREEN)
             cv2.setWindowProperty("posenet",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
             cv2.imshow("posenet", overlay_image)
+            end_time = int(round(time.time() * 1000))
             frame_count += 1
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
         print('Average FPS: ', frame_count / (time.time() - start))
-
+        cv2.destroyAllWindows()
 
 if __name__ == "__main__":
     main()
