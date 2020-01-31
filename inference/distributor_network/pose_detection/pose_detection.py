@@ -16,9 +16,14 @@ parser.add_argument('--host_ip', type=str, default=None)
 parser.add_argument('--port', type=int, default=None)
 args = parser.parse_args()
 
+def convBGRto(frame):
+    b, g, r = cv2.split(frame)
+    frame = cv2.merge((r, g, b))
+    return frame
 
 def main():
     listen = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    listen.settimeout(2)
     server_adress = (args.host_ip, args.port)
 
     
@@ -40,7 +45,7 @@ def main():
         
         while True:
             start_time = int(round(time.time() * 1000))
-            printf("PoseNet: Try to recv...")
+            print("PoseNet: Try to recv...")
             try:
                 sent = listen.sendto("get".encode('utf-8'), server_adress)
                 data, server = listen.recvfrom(65507)
@@ -51,7 +56,7 @@ def main():
 
             array = np.frombuffer(data, dtype=np.dtype('uint8'))
             cap = cv2.imdecode(array, 1)
-            
+            cap = convBGRto(cap)
             input_image, display_image, output_scale = posenet.process(cap, scale_factor=args.scale_factor, output_stride=output_stride)
 
             heatmaps_result, offsets_result, displacement_fwd_result, displacement_bwd_result = sess.run(

@@ -2,10 +2,6 @@ import cv2
 import socket
 import numpy as np
 
-def convBGRtoGBR(frame):
-    b, g, r = cv2.split(frame)
-    frame = cv2.merge((r, g, b))
-    return frame
 
 def cv2_encode_image(cv2_img, jpeg_quality=50):
     encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality]

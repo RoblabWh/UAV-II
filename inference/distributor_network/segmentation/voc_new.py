@@ -21,9 +21,9 @@ from PIL import Image
 
 NUM_CLASSES = 21
 
-voc_dataset = {"background" : True, "aeroplane": True, "bicycle": True, "bird": True, "boat": True, "bottle": True, "bus": True, \
-               "car": True, "cat": True, "chair": True, "cow": True, "diningtable": True, "dog": True, "horse": True, "motorbike": True, \
-               "person": True, "pottedplant": True, "sheep": True, "sofa": True, "train": True, "tvmonitor": True}
+voc_dataset = {"background" : True, "aeroplane": False, "bicycle": False, "bird": False, "boat": False, "bottle": True, "bus": False, \
+               "car": False, "cat": False, "chair": True, "cow": False, "diningtable": True, "dog": True, "horse": False, "motorbike": False, \
+               "person": True, "pottedplant": True, "sheep": False, "sofa": True, "train": False, "tvmonitor": True}
 
 class SemanticSegmentation:
     def __init__(self, cmap='cmap.npy', modelName='voc50', host_ip='127.0.0.1', port=5555):
@@ -106,7 +106,7 @@ class SemanticSegmentation:
         beta = (1.0 - alpha)
         while (True):
             start_time = int(round(time.time() * 1000))
-            printf("PascalVoc: Try to recv...")
+            print("PascalVoc: Try to recv...")
             try:
                 sent = listen.sendto("get".encode('utf-8'), server_adress)
                 data, server = listen.recvfrom(65507)
@@ -117,11 +117,12 @@ class SemanticSegmentation:
 
             array = np.frombuffer(data, dtype=np.dtype('uint8'))
             image = cv2.imdecode(array, 1)
+            image = convBGRto(image)
             segm = self.segmentation(image)
             overlay = cv2.addWeighted(image, alpha, segm, beta, 0.0)
             #self.showImage("Semantische Segmentierung", overlay)
-            self.showImage("Raw Image", image)
-            self.showImage("Semantic Segmentation", segm)
+            #self.showImage("Raw Image", image)
+            #self.showImage("Semantic Segmentation", segm)
             self.showImage("Overlay Image", overlay, True)
             end_time = int(round(time.time() * 1000))
             sys.stdout.write('\r Converted in {}s and {} ms'.format(int(round((end_time - start_time) / 1000)), (end_time - start_time) % 1000))
@@ -260,7 +261,10 @@ class SemanticSegmentation:
         cv2.imwrite('overlay/Test2_overlay.jpg', overlay)
         cv2.imwrite('segm/Test2_segm.jpg', segm)
 
-
+def convBGRto(frame):
+    b, g, r = cv2.split(frame)
+    frame = cv2.merge((r, g, b))
+    return frame
 
 def main():
     parser = argparse.ArgumentParser()
@@ -268,8 +272,9 @@ def main():
     parser.add_argument('--scale_factor', type=float, default=0.7125)
     parser.add_argument('--host_ip', type=str, default=None)
     parser.add_argument('--port', type=int, default=None)
+    parser.add_argument('--cmap', type=str, default=None)
     args = parser.parse_args()
-    voc = SemanticSegmentation(host_ip=args.host_ip, port=args.port)
+    voc = SemanticSegmentation(cmap=args.cmap, host_ip=args.host_ip, port=args.port)
     voc.filter(voc_dataset)
     #voc.testImage()
     #voc.showWebcam()
