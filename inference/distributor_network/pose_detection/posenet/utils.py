@@ -21,6 +21,9 @@ def _process_input(source_img, scale_factor=1.0, output_stride=16):
     input_img = input_img.reshape(1, target_height, target_width, 3)
     return input_img, source_img, scale
 
+def process(img, scale_factor=1.0, output_stride=16):
+    return _process_input(img, scale_factor, output_stride)
+
 
 def read_cap(cap, scale_factor=1.0, output_stride=16):
     res, img = cap.read()
