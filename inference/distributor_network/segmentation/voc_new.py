@@ -259,9 +259,9 @@ def main():
     voc = SemanticSegmentation()
     voc.filter(voc_dataset)
     #voc.testImage()
-    #voc.showWebcam()
+    voc.showWebcam()
     #voc.listener()
-    voc.saveVideo()
+    #voc.saveVideo()
 
 
 if __name__== "__main__":
