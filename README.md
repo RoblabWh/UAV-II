@@ -1,4 +1,4 @@
-# UAV II Einsatz von KI im Gefahrenbereich
+# UAV II - Einsatz von KI im Gefahrenbereich
 ## Problemstellung
 * Könnte die Drohne bei Konzentrationsverlust des Operators mithilfe eines Deep Learning Verfahrens selbstständig navigieren?
 * Könnten Gegenstände und Personen im Gefahrenbereich dann auch mithilfe von Deep Learning automatisch erkannt werden?
