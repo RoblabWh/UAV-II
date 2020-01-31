@@ -5,6 +5,8 @@ import argparse
 
 import posenet
 
+
+
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', type=int, default=101)
 parser.add_argument('--cam_id', type=int, default=0)
@@ -16,7 +18,9 @@ args = parser.parse_args()
 
 
 def main():
-    with tf.Session() as sess:
+    config = tf.ConfigProto()
+    config.gpu_options.allow_growth = True
+    with tf.Session(config=config) as sess:
         model_cfg, model_outputs = posenet.load_model(args.model, sess)
         output_stride = model_cfg['output_stride']
 
@@ -54,7 +58,9 @@ def main():
                 display_image, pose_scores, keypoint_scores, keypoint_coords,
                 min_pose_score=0.15, min_part_score=0.1)
 
-            cv2.imshow('posenet', overlay_image)
+            cv2.namedWindow("posenet", cv2.WND_PROP_FULLSCREEN)
+            cv2.setWindowProperty("posenet",cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
+            cv2.imshow("posenet", overlay_image)
             frame_count += 1
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
