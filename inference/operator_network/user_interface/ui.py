@@ -61,14 +61,14 @@ class UI:
 
     def operatorControl(self):
         if(self.btn_ai['text'] == "AI einschalten"):
-            print("Joystick einschalten")
+            #print("Joystick einschalten")
             self.joy_thread = self.joy_thread = threading.Thread(target=self.joy.run)
             self.joy_thread.start()
             #self.drone.set_joystick(True)
             self.btn_ai['text'] = "AI ausschalten"
             # AI aktivieren
         else:
-            print("Joystick ausgeschaltet")
+            #print("Joystick ausgeschaltet")
             self.joy.turnoff()
             self.btn_ai['text'] = "AI einschalten"
             # AI deaktivieren
@@ -107,11 +107,11 @@ class UI:
             self.videoStream = cv.VideoWriter('' + name + '.avi', self.fourcc, self.fps, (960, 720))  # (720, 960))
             self.btn_record['text'] = "Record ausschalten"
             self.isRecord = True
-        print self.frame.shape
+        #print self.frame.shape
 
     def _record(self, fps):
         if(self.isRecord):
-            print("schreibe stream")
+            #print("schreibe stream")
             frame = self.frame
             b, g, r = cv.split(frame)
             frame = cv.merge((r,g,b))
@@ -120,10 +120,10 @@ class UI:
                 pass
 
     """Todo: Anpassen der text Ausrichtungen!!!"""
-    def _getFrame(self):
+    def _getFrame(self, frame):
         text = []
         color = (0, 0, 0)
-        frame = self.frame
+        #frame = self.frame
         width, height = frame.shape[:2]
         #print(height)
         width +=40
@@ -147,17 +147,18 @@ class UI:
         """
         try:
             time.sleep(0.5)
-            #self.periodicSending_thread.start()
+            self.periodicSending_thread.start()
             #print("gestartet")
             while not self.stopEvent.is_set():
                 system = platform.system()
                 #print("after system")
                 #read the frame for the GUI show
                 self.frame = self.drone.getFrame()
-                if(self.frame is None or self.frame.size == 0):
+                frame = self.frame.copy()
+                if(frame is None or frame.size == 0):
                     continue
 
-                frame = self._getFrame()
+                frame = self._getFrame(frame)
 
                 if(self.isFullscreen):
                     #print("drin")
@@ -214,7 +215,7 @@ class UI:
             self.drone.send_command('command')
             time.sleep(10)
             #print("gesendet")
-        print("sending ende")
+        #print("sending ende")
 
     def onClose(self):
         """
