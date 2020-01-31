@@ -1,8 +1,8 @@
 import cv2
 import socket
 import numpy as np
-
-def convBGRtoGBR(frame):
+""" Bitte verwenden!!! """
+def convBGRtoRGB(frame):
     b, g, r = cv2.split(frame)
     frame = cv2.merge((r, g, b))
     return frame
@@ -46,7 +46,25 @@ def video_server(drone):
                 continue
             # We send back the buffer to the client
             sock.sendto(buffer, address)
-        """
+
+        """data, address = sock.recvfrom(4)
+        img = data.copy()
+        print("Data: {} Address: {}".format(data, address))
+        data = data.decode('utf-8')
+        if (data == "get"):
+            for i in range(0, len(clients))
+
+            buffer = cv2_encode_image(drone.getFrame())
+            if buffer is None:
+                continue
+            if len(buffer) > 65507:
+                print(
+                    "The message is too large to be sent within a single UDP datagram. We do not handle splitting the message in multiple datagrams")
+                sock.sendto("FAIL".encode('utf-8'), address)
+                continue
+            # We send back the buffer to the client
+            sock.sendto(buffer, address)
+            
         for client in clients:
             if(address == client):
                 array = np.frombuffer(img, dtype=np.dtype('uint8'))
