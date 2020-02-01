@@ -4,7 +4,7 @@ sys.path.append("/home/artur/Bibliotheken/tensorflow/models/research")
 sys.path.append("/home/artur/Bibliotheken/tensorflow/models/research/object_detection")
 sys.path.append("/home/artur/Bibliotheken/tensorflow/models/research/object_detection/utils")
 import tensorflow as tf
-from object_detection.utils import ops as utils_ops
+from utils import ops as utils_ops
 import numpy as np
 import cv2
 
@@ -85,32 +85,11 @@ def run_inference_images(image, graph, tensor_dict, sess):
 
 def main():
 
-    print("First argument", sys.argv[0])
-    if (len(sys.argv) < 4):
-        print("Usage: python3 clientObjectDetection.py <Boolean> (True for using downloaded mobilenet, false for using locally one)")
-        exit()
-
-    if sys.argv[0]:
-        # MODEL TO DOWNLOAD
-        MODEL_NAME = 'ssd_mobilenet_v1_coco_2018_01_28_original'
-        MODEL_FILE = MODEL_NAME + '.tar.gz'
-        DOWNLOAD_BASE = 'http://download.tensorflow.org/models/object_detection/'
-        PATH_TO_FROZEN_GRAPH = MODEL_NAME + '/frozen_inference_graph.pb'
-        PATH_TO_LABELS = os.path.join('data', 'mscoco_label_map.pbtxt')
-        # DOWNLOADING MODEL
-        #opener = urllib.request.URLopener()
-        #opener.retrieve(DOWNLOAD_BASE + MODEL_FILE, MODEL_FILE)
-        #tar_file = tarfile.open(MODEL_FILE)
-        #for file in tar_file.getmembers():
-        #  file_name = os.path.basename(file.name)
-        #  if 'frozen_inference_graph.pb' in file_name:
-        #    tar_file.extract(file, os.getcwd())
-    else:
         ## LOCAL OBJECT DETECTION
-        MODEL_NAME = "warning_signs_graph"
-        PATH_TO_FROZEN_GRAPH = MODEL_NAME + '/frozen_inference_graph.pb'
-        PATH_TO_LABELS = os.path.join('data', 'object-detection.pbtxt')
-        NUM_CLASSES = 3
+    MODEL_NAME = "warning_signs_graph"
+    PATH_TO_FROZEN_GRAPH = MODEL_NAME + '/frozen_inference_graph.pb'
+    PATH_TO_LABELS = os.path.join('data', 'object-detection.pbtxt')
+    NUM_CLASSES = 3
     
     detection_graph = tf.Graph()
     with detection_graph.as_default():
@@ -145,7 +124,7 @@ def main():
                     tensor_name)
             while True:
                 #ret, image_np = cap.read()
-                print("PoseNet: Try to recv...")
+                print("ObjectDetection: Try to recv...")
                 try:
                     sent = sock.sendto("get".encode('utf-8'), server_address)
                     data, server = sock.recvfrom(65507)
