@@ -40,7 +40,7 @@ from utils import label_map_util
 
 from utils import visualization_utils as vis_util
 
-def convBGRto(frame):
+def convBGRtoRGB(frame):
     b, g, r = cv2.split(frame)
     frame = cv2.merge((r, g, b))
     return frame
@@ -134,6 +134,7 @@ def main():
 
                 array = np.frombuffer(data, dtype=np.dtype('uint8'))
                 image_np = cv2.imdecode(array, 1)
+                image_np = convBGRtoRGB(image_np)
                 # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
                 image_np_expanded = np.expand_dims(image_np, axis=0)
                 # Actual detection.
