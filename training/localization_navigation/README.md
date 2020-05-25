@@ -5,6 +5,6 @@ Der Ordner "checkpoints" beinhaltet das gespeicherte Model, welches zum endgült
 
 Die Trainings- und Evaluierungsbilder befinden sich in dem "dataset" Ordner.
 
-In dem Ordner "plots" befinden sich ein Bild mit einem Graphen, der die Accuracy und Loss der verschiedenen Models auflistet.
+In dem Ordner "plots" befindet sich ein Bild mit einem Graphen, der die Accuracy und Loss der verschiedenen Models auflistet.
 
 Unter anderem befindet sich in dem Ordner auch ein detailreiches Bild von der Architektur des CNN. 
