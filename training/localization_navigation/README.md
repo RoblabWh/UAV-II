@@ -8,4 +8,4 @@ Unter anderem befindet sich in dem Ordner auch ein detailreiches Bild von der Ar
 ## Testing
 Der Ordner "checkpoints" beinhaltet das gespeicherte Model, welches zum endgültigen Testen verwendet wurde.
 Die Testbilder befinden sich ebenfalls in dem "dataset" Ordner.
-Bei dem Testen, können die Heatmeaps verschiedener Layer angezeigt werden. Zudem können die Aktivierungsfunktionen ausgetauscht werden, um das Verhalten des CNN zu verändern. Diese Änderung an der Architektur des CNN wird in dem "tmp" Ordner abgespeichert.
+Bei dem Testen können die Heatmeaps verschiedener Layer angezeigt werden. Zudem können die Aktivierungsfunktionen ausgetauscht werden, um das Verhalten des CNN zu verändern. Diese Änderung an der Architektur des CNN wird in dem "tmp" Ordner abgespeichert.
