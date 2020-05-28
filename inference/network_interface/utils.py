@@ -2,8 +2,7 @@ import cv2
 import socket
 import numpy as np
 
-
-def listen():
+def init_listen():
     host = ''
     port = 5555
 
@@ -12,6 +11,10 @@ def listen():
     # Bind the socket to the port
     server_address = (host, port)
     sock.bind(server_address)
+
+    return sock
+
+def listen(sock):
     try:
         data, address = sock.recvfrom(65507)
     except socket.error as exc:
