@@ -207,6 +207,9 @@ class joystick:
         self.right_y = 0.0
         pygame.init()
         pygame.joystick.init()
+        #self._verifyJostick()
+
+    def _verifyJostick(self):
         try:
             js = pygame.joystick.Joystick(0)
             js.init()
@@ -229,7 +232,11 @@ class joystick:
 
         if self.buttons is None:
             print('no supported joystick found')
+            self.running = False
             return
+
+    def __del__(self):
+        self.running = False
 
     def turnoff(self):
         self.running = False
@@ -290,104 +297,107 @@ class joystick:
         return res
 
     def run(self):
-        try:
-            self.drone.set_joystick(True)
-            while self.running:
-                # loop with pygame.event.get() is too much tight w/o some sleep
-                time.sleep(0.01)
-                #print("drin")
-                for e in pygame.event.get():
-                    #print(e)
-                    if e.type == pygame.locals.JOYAXISMOTION:
-                        # ignore small input values (Deadzone)
-                        if -self.buttons.DEADZONE <= e.value and e.value <= self.buttons.DEADZONE:
-                            #print("drin")W
-                            #print(e.value)
-                            e.value = 0.0
-                        if e.axis == self.buttons.LEFT_Y:
-                            self.throttle = self.update(self.throttle, e.value * self.buttons.LEFT_Y_REVERSE)
-                            self.set_throttle(self.throttle)
-                            #print(self.throttle)
-                        if e.axis == self.buttons.LEFT_X:
-                            self.yaw = self.update(self.yaw, e.value * self.buttons.LEFT_X_REVERSE)
-                            self.set_yaw((self.yaw))
-                            #self.drone.set_yaw(yaw)
-                        if e.axis == self.buttons.RIGHT_Y:
-                            self.pitch = self.update(self.pitch, e.value * self.buttons.RIGHT_Y_REVERSE)
-                            self.set_pitch(self.pitch)
-                            #self.drone.set_pitch(pitch)
-                        if e.axis == self.buttons.RIGHT_X:
-                            self.roll = self.update(self.roll, e.value * self.buttons.RIGHT_X_REVERSE)
-                            self.set_roll(self.roll)
-                            #self.drone.set_roll(roll)
-                        left_x, left_y, right_x, right_y = self._normalize()
-                        self.drone.cmdRC(left_x, left_y, right_x, right_y)
-                    elif e.type == pygame.locals.JOYHATMOTION:
-                        #print("e[0] {}, e[1] {}".format(e.value[0], e.value[1]))
-                        if e.value[0] < 0:
-                            self.drone.rc_counter_clockwise(self.speed)
-                        if e.value[0] == 0:
-                            self.drone.rc_clockwise(0)
-                        if e.value[0] > 0:
-                            self.drone.rc_clockwise(self.speed)
-                        if e.value[1] < 0:
-                            self.drone.rc_down(self.speed)
-                        if e.value[1] == 0:
-                            self.drone.rc_up(0)
-                        if e.value[1] > 0:
-                            self.drone.rc_up(self.speed)
-                    elif e.type == pygame.locals.JOYBUTTONDOWN:
-                        print("Joybutton down")
-                        print(e.button)
-                        if e.button == self.buttons.LAND:
-                            self.drone.cmdLand()
-                        elif e.button == self.buttons.UP:
-                            self.drone.rc_up(self.speed)
-                        elif e.button == self.buttons.DOWN:
-                            self.drone.rc_down(self.speed)
-                        elif e.button == self.buttons.ROTATE_RIGHT:
-                            self.drone.rc_right(self.speed)
-                        elif e.button == self.buttons.ROTATE_LEFT:
-                            self.drone.r_left(self.speed)
-                        elif e.button == self.buttons.FORWARD:
-                            self.drone.rc_forward(self.speed)
-                        elif e.button == self.buttons.BACKWARD:
-                            self.drone.rc_backward(self.speed)
-                        elif e.button == self.buttons.RIGHT:
-                            self.drone.rc_right(self.speed)
-                        elif e.button == self.buttons.LEFT:
-                            self.drone.rc_left(self.speed)
-                    elif e.type == pygame.locals.JOYBUTTONUP:
-                        print("Joybutton up")
-                        print(e.button)
-                        if e.button == self.buttons.TAKEOFF:
-                            if self.throttle != 0.0:
-                                print('###')
-                                print('### throttle != 0.0 (This may hinder the drone from taking off)')
-                                print('###')
-                            self.drone.cmdTakeoff()
-                        elif e.button == self.buttons.UP:
-                            self.drone.rc_up(0)
-                        elif e.button == self.buttons.DOWN:
-                            self.drone.rc_down(0)
-                        elif e.button == self.buttons.ROTATE_RIGHT:
-                            self.drone.rc_clockwise(0)
-                        elif e.button == self.buttons.ROTATE_LEFT:
-                            self.drone.rc_counter_clockwise(0)
-                        elif e.button == self.buttons.FORWARD:
-                            self.drone.rc_forward(0)
-                        elif e.button == self.buttons.BACKWARD:
-                            self.drone.rc_backward(0)
-                        elif e.button == self.buttons.RIGHT:
-                            self.drone.rc_right(0)
-                        elif e.button == self.buttons.LEFT:
-                            self.drone.rc_left(0)
-        except KeyboardInterrupt as e:
-            print(e)
-        except Exception as e:
-            exc_type, exc_value, exc_traceback = sys.exc_info()
-            traceback.print_exception(exc_type, exc_value, exc_traceback)
-            print(e)
+        self._verifyJostick()
+        if(self.running):
+            try:
+                self.drone.set_joystick(True)
+                while self.running:
+                    # loop with pygame.event.get() is too much tight w/o some sleep
+                    time.sleep(0.01)
+                    #print("drin")
+                    for e in pygame.event.get():
+                        #print(e)
+                        if e.type == pygame.locals.JOYAXISMOTION:
+                            # ignore small input values (Deadzone)
+                            if -self.buttons.DEADZONE <= e.value and e.value <= self.buttons.DEADZONE:
+                                #print("drin")W
+                                #print(e.value)
+                                e.value = 0.0
+                            if e.axis == self.buttons.LEFT_Y:
+                                self.throttle = self.update(self.throttle, e.value * self.buttons.LEFT_Y_REVERSE)
+                                self.set_throttle(self.throttle)
+                                #print(self.throttle)
+                            if e.axis == self.buttons.LEFT_X:
+                                self.yaw = self.update(self.yaw, e.value * self.buttons.LEFT_X_REVERSE)
+                                self.set_yaw((self.yaw))
+                                #self.drone.set_yaw(yaw)
+                            if e.axis == self.buttons.RIGHT_Y:
+                                self.pitch = self.update(self.pitch, e.value * self.buttons.RIGHT_Y_REVERSE)
+                                self.set_pitch(self.pitch)
+                                #self.drone.set_pitch(pitch)
+                            if e.axis == self.buttons.RIGHT_X:
+                                self.roll = self.update(self.roll, e.value * self.buttons.RIGHT_X_REVERSE)
+                                self.set_roll(self.roll)
+                                #self.drone.set_roll(roll)
+                            left_x, left_y, right_x, right_y = self._normalize()
+                            self.drone.cmdRC(left_x, left_y, right_x, right_y)
+                        elif e.type == pygame.locals.JOYHATMOTION:
+                            #print("e[0] {}, e[1] {}".format(e.value[0], e.value[1]))
+                            if e.value[0] < 0:
+                                self.drone.rc_counter_clockwise(self.speed)
+                            if e.value[0] == 0:
+                                self.drone.rc_clockwise(0)
+                            if e.value[0] > 0:
+                                self.drone.rc_clockwise(self.speed)
+                            if e.value[1] < 0:
+                                self.drone.rc_down(self.speed)
+                            if e.value[1] == 0:
+                                self.drone.rc_up(0)
+                            if e.value[1] > 0:
+                                self.drone.rc_up(self.speed)
+                        elif e.type == pygame.locals.JOYBUTTONDOWN:
+                            print("Joybutton down")
+                            print(e.button)
+                            if e.button == self.buttons.LAND:
+                                self.drone.cmdLand()
+                            elif e.button == self.buttons.UP:
+                                self.drone.rc_up(self.speed)
+                            elif e.button == self.buttons.DOWN:
+                                self.drone.rc_down(self.speed)
+                            elif e.button == self.buttons.ROTATE_RIGHT:
+                                self.drone.rc_right(self.speed)
+                            elif e.button == self.buttons.ROTATE_LEFT:
+                                self.drone.r_left(self.speed)
+                            elif e.button == self.buttons.FORWARD:
+                                self.drone.rc_forward(self.speed)
+                            elif e.button == self.buttons.BACKWARD:
+                                self.drone.rc_backward(self.speed)
+                            elif e.button == self.buttons.RIGHT:
+                                self.drone.rc_right(self.speed)
+                            elif e.button == self.buttons.LEFT:
+                                self.drone.rc_left(self.speed)
+                        elif e.type == pygame.locals.JOYBUTTONUP:
+                            print("Joybutton up")
+                            print(e.button)
+                            if e.button == self.buttons.TAKEOFF:
+                                if self.throttle != 0.0:
+                                    print('###')
+                                    print('### throttle != 0.0 (This may hinder the drone from taking off)')
+                                    print('###')
+                                self.drone.cmdTakeoff()
+                            elif e.button == self.buttons.UP:
+                                self.drone.rc_up(0)
+                            elif e.button == self.buttons.DOWN:
+                                self.drone.rc_down(0)
+                            elif e.button == self.buttons.ROTATE_RIGHT:
+                                self.drone.rc_clockwise(0)
+                            elif e.button == self.buttons.ROTATE_LEFT:
+                                self.drone.rc_counter_clockwise(0)
+                            elif e.button == self.buttons.FORWARD:
+                                self.drone.rc_forward(0)
+                            elif e.button == self.buttons.BACKWARD:
+                                self.drone.rc_backward(0)
+                            elif e.button == self.buttons.RIGHT:
+                                self.drone.rc_right(0)
+                            elif e.button == self.buttons.LEFT:
+                                self.drone.rc_left(0)
+            except KeyboardInterrupt as e:
+                print(e)
+            except Exception as e:
+                exc_type, exc_value, exc_traceback = sys.exc_info()
+                traceback.print_exception(exc_type, exc_value, exc_traceback)
+                print(e)
+        print("Joystick offline")
         """
         except e:
             pass"""
