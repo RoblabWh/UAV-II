@@ -31,7 +31,7 @@ class drone(object):
         self.frame = None  # numpy array BGR -- current camera output frame
         self.abort_flag = False
         self.command_timeout = 0.3
-
+        self.manipulatedFrame = None
 
         #terminate varibale
         self.terminate = False
@@ -46,12 +46,12 @@ class drone(object):
         """
                     Prepare Receive tello-state
         """
-        self.socket_state = self.initSocket('', 8890)
+        self.socket_state = self.initSocket('', 8890, 10)
         self.receive_socket_state = threading.Thread(target=self._receive_state_thread)
         """
                     Prepare Receive Videostream
         """
-        self.video_socket = self.initSocket('', 11111)
+        self.video_socket = self.initSocket('', 11111, 10)
         self.receive_video_thread = threading.Thread(target=self._receive_video_thread)
         self.receive_video_thread.daemon = True
         self.decoder = libh264decoder.H264Decoder()
@@ -71,10 +71,10 @@ class drone(object):
         self.receive_video_thread.start()
 
     def __del__(self):
+        self.setTerminate()
         self.cmd_socket.close()
         self.socket_state.close()
         self.video_socket.close()
-        self.setTerminate()
 
     def _receive_cmd_thread(self):
         """
@@ -101,7 +101,13 @@ class drone(object):
                 self.cmd_response = response
                 #print(response)
             except socket.error as exc:
-                pass
+                exc = "%s" % exc
+                if (exc == "timed out"):
+                    #print("test erfolgreich")
+                    continue
+                else:
+                    print ("Caught exception socket.error in Command thread: %s" % exc)
+                    break
                 #print("Caught exception socket.error in cmd thread: %s" % exc)
         print("command thread offline")
 
@@ -156,7 +162,14 @@ class drone(object):
                 #self.height = response[ response.index(";h:") + 3 : response.index(";bat:")]
                 #print("Hoehe: {}".format(self.height))
             except socket.error as exc:
-                print ("Caught exception socket.error in state thread : %s" % exc)
+                exc = "%s" % exc
+                if (exc == "timed out"):
+                    #print("test erfolgreich")
+                    continue
+                else:
+                    print ("Caught exception socket.error in State thread: %s" % exc)
+                    break
+                #print ("Caught exception socket.error in state thread : %s" % exc)
         print("state thread offline")
 
     def _receive_video_thread(self):
@@ -185,8 +198,15 @@ class drone(object):
                         #cv.imshow('TelloStream', frame)
                     packet_data = ""
             except socket.error as exc:
-                print ("Caught exception socket.error in video thread: %s" % exc)
-        #print("video thread offline")
+                exc = "%s" % exc
+                if (exc == "timed out"):
+                    #print("test erfolgreich")
+                    continue
+                else:
+                    print ("Caught exception socket.error in Video thread: %s" % exc)
+                    break
+                #print ("Caught exception socket.error in video thread: %s" % exc)
+        print("video thread offline")
 
     def initSocket(self, adress, port, timeout=None):
         sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)  # socket for receiving video stream
@@ -446,3 +466,9 @@ class drone(object):
 
     def getBaro(self):
         return self.baro
+
+    def setManipulatedFrame(self, frame):
+        self.manipulatedFrame = frame
+
+    def getManipulatedFrame(self):
+        return self.manipulatedFrame
