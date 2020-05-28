@@ -1,15 +1,12 @@
 import cv2
 import socket
 import numpy as np
-<<<<<<< HEAD
 
-=======
 """ Bitte verwenden!!! """
 def convBGRtoRGB(frame):
     b, g, r = cv2.split(frame)
     frame = cv2.merge((r, g, b))
     return frame
->>>>>>> efc9209e61adb2a087c45dd47e1d081d12e288f6
 
 def cv2_encode_image(cv2_img, jpeg_quality=50):
     encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality]
@@ -22,23 +19,38 @@ def video_server(drone):
     clients = []
 
 
-    keep_running = True
+    #global keep_running
+    keep_running = not drone.terminate
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
+    sock.settimeout(10)
     # Bind the socket to the port
     server_address = (host, port)
 
-    print('starting up on %s port %s\n' % server_address)
+    #print('starting up on %s port %s\n' % server_address)
 
     sock.bind(server_address)
 
     while(keep_running):
-        data, address = sock.recvfrom(4)
-        img = data
-        print("Data: {} Address: {}".format(data, address))
-        data = data.decode('utf-8')
-        if(data == "get"):
+        keep_running = not drone.terminate
+        try:
+            data, address = sock.recvfrom(65507)
+        except socket.error as exc:
+            exc = "%s" % exc
+            if(exc == "timed out"):
+                #print("test erfolgreich")
+                continue
+            else:
+                print ("Caught exception socket.error in video thread: %s" % exc)
+                break
+        #img = data
+        #print("Data: {} Address: {}".format(data, address))
+        #enc = data.decode('utf-8')
+        array = np.frombuffer(data, np.dtype('uint8'))
+        data = cv2.imdecode(array, 1)
+        print("decode")
+        print(data)
+        if((data == "get") or (data is None)):
             #for i in range(0, len(clients))
 
             buffer = cv2_encode_image(drone.getFrame())
@@ -50,7 +62,22 @@ def video_server(drone):
                 continue
             # We send back the buffer to the client
             sock.sendto(buffer, address)
-
+        else:
+            print("else zweig")
+            if(data is None):
+                continue
+            print("set image")
+            drone.setManipulatedFrame(data)
+            buffer = cv2_encode_image(drone.getFrame())
+            if buffer is None:
+                continue
+            if len(buffer) > 65507:
+                print(
+                    "The message is too large to be sent within a single UDP datagram. We do not handle splitting the message in multiple datagrams")
+                sock.sendto("FAIL".encode('utf-8'), address)
+                continue
+            # We send back the buffer to the client
+            sock.sendto(buffer, address)
         """data, address = sock.recvfrom(4)
         img = data.copy()
         print("Data: {} Address: {}".format(data, address))
@@ -87,5 +114,5 @@ def video_server(drone):
         #     grabber.stop()
         #     keep_running = False
 
-    print("Quitting..")
+    print("Network establish Quitting..")
     sock.close()
