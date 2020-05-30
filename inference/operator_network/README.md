@@ -1,4 +1,18 @@
-# Titel
-Beschreibung des Verzeichnises und der Ordner...
-## Autonomer Korridorflug
-Der Ordner „ai“ beinhaltet die Künstliche Intelligenz und den Software-Controller für den autonomen Korridorflug, die dafür verantwortlich sind, Steuerbefehle zu generieren und an die Drone zu senden.
+# Segmentierung
+## Getting Started
+Um die Ergebnisse dieses Programms nachzustellen wird das Betriebssystem Ubuntu 18.04 benötigt. Das Programm wurde in Python 2 getestet.
+## Dependencies
+
+```
+pip
+```
+Zum installieren der benötigten Packete den Befehl `./install.sh`
+
+## Running Programm
+
+Soll der Operator/AI gestartet werden, muss das Main Programm gestartet werden
+
+```
+python voc_new.py
+```
+
