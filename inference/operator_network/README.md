@@ -5,6 +5,7 @@ Um die Ergebnisse dieses Programms nachzustellen wird das Betriebssystem Ubuntu 
 
 ```
 pip
+python2
 ```
 Zum installieren der benötigten Packete den Befehl `./install.sh`
 
