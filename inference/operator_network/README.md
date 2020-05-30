@@ -1,4 +1,4 @@
-# Segmentierung
+# Operator
 ## Getting Started
 Um die Ergebnisse dieses Programms nachzustellen wird das Betriebssystem Ubuntu 18.04 benötigt. Das Programm wurde in Python 2 getestet.
 ## Dependencies
