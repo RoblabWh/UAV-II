@@ -1,0 +1,29 @@
+item {
+  id: 1
+  name: 'Corrosive'
+}
+
+item {
+  id: 2
+  name: 'Explosive'
+}
+
+item {
+  id: 3
+  name: 'Flammable'
+}
+
+item {
+  id: 4
+  name: 'HealthHazard'
+}
+
+item {
+  id: 5
+  name: 'General'
+}
+
+item {
+  id: 6
+  name: 'Poison'
+}
