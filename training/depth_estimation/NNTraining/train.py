@@ -47,7 +47,10 @@ parser.add_argument('--maxdepth', type=float, default=65536.0, help='Maximum of 
 parser.add_argument('--name', type=str, default='densedepth_nyu', help='A name to attach to the training session')
 parser.add_argument('--checkpoint', type=str, default='', help='Start training from an existing model.')
 parser.add_argument('--full', dest='full', action='store_true', help='Full training with metrics, checkpoints, and image samples.')
-
+parser.add_argument('--own_data_dir', dest='own_data_dir', action='store_true', help='Specify the path to the directory which contains the training dataset from your own data acquisition with the Microsoft Kinect v1.')
+parser.add_argument('--nyu_train_data_dir', dest='nyu_train_data_dir', action='store_true', help='Specify the path to the directory which contains the training dataset which was generated from the NYU indoor dataset.')
+parser.add_argument('--nyu_eval_data_dir', dest='nyu_eval_data_dir', action='store_true', help='Specify the path to the directory which contains the evaluation dataset which was generated from the NYU indoor dataset.')
+args.own_data_dir, args.nyu_train_data_dir, args.nyu_eval_data_dir
 args = parser.parse_args()
 
 # Inform about multi-gpu training
@@ -61,7 +64,7 @@ else:
 model = create_model( existing=args.checkpoint )
 
 # Data loaders
-if args.data == 'nyu': train_generator, test_generator = get_nyu_train_test_data( args.bs )
+if args.data == 'nyu': train_generator, test_generator = get_nyu_train_test_data( args.bs, args.own_data_dir, args.nyu_train_data_dir, args.nyu_eval_data_dir )
 if args.data == 'unreal': train_generator, test_generator = get_unreal_train_test_data( args.bs )
 
 # Training session details
