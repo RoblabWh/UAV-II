@@ -50,7 +50,6 @@ parser.add_argument('--full', dest='full', action='store_true', help='Full train
 parser.add_argument('--own_data_dir', dest='own_data_dir', action='store_true', help='Specify the path to the directory which contains the training dataset from your own data acquisition with the Microsoft Kinect v1.')
 parser.add_argument('--nyu_train_data_dir', dest='nyu_train_data_dir', action='store_true', help='Specify the path to the directory which contains the training dataset which was generated from the NYU indoor dataset.')
 parser.add_argument('--nyu_eval_data_dir', dest='nyu_eval_data_dir', action='store_true', help='Specify the path to the directory which contains the evaluation dataset which was generated from the NYU indoor dataset.')
-args.own_data_dir, args.nyu_train_data_dir, args.nyu_eval_data_dir
 args = parser.parse_args()
 
 # Inform about multi-gpu training
