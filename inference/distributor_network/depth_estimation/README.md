@@ -1,3 +1,5 @@
+Ein Docker-Container zur Ausführung des Neuronales Netzes zur Generierung von Tiefenbildern aus 2D-Farbbildern, zur Visualisierung der Netzausgabe und daraus generierter Punktwolken sowie für SLAM.
+
 Der Container baut auf einer Kaskade anderer Container auf:
 
 0. densedepth_ROSCudnn
