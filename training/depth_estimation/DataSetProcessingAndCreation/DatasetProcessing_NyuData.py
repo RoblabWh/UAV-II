@@ -9,7 +9,7 @@ from imageio import imread
 import cv2
 import numpy as np
 import os, shutil
-import CameraParams
+import NYUCameraParams
 from ListOfURLS import url_list
 import time
 import PlaneSegmentationAndLabeling as PlaneSegmentationAndLabeling
