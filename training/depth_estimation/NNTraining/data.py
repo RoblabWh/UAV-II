@@ -16,45 +16,24 @@ def nyu_resize(img, resolution=416, padding=6):
     from skimage.transform import resize
     return resize(img, (resolution, int(resolution*4/3)), preserve_range=True, mode='reflect', anti_aliasing=True )
 
-def get_nyu_data(batch_size, nyu_data_zipfile='nyu_data.zip'):
+def get_nyu_data(batch_size, own_data_dir, nyu_train_data_dir, nyu_eval_data_dir):
+    
     data = None
-
-    #nyu2_train = list((row.split(',') for row in (data['data/nyu2_train.csv']).decode("utf-8").split('\n') if len(row) > 0))
-    #nyu2_test = list((row.split(',') for row in (data['data/nyu2_test.csv']).decode("utf-8").split('\n') if len(row) > 0))
-
-    dirName = '/media/gas/Samsung_T5/Datensätze/DatasetReduced_CroppedImages'
-
+    datasetDirs = [own_data_dir, nyu_train_data_dir, nyu_eval_data_dir]
+    
     nyu2_train = list()
-    for (dirpath, dirnames, filenames) in os.walk(dirName):
-        for file in filenames:
-            if file.endswith('New.png'):
-                nyu2_train.append((glob.glob(dirpath + '/*undist.ppm')[0], glob.glob(dirpath + '/*NoOverflow.pgm')[0], os.path.join(dirpath, file)))
-    print(len(nyu2_train))
-
-    nyu2_train = nyu2_train[::4] + nyu2_train[1::4] + nyu2_train[2::4]
-
-    print(len(nyu2_train))
-
-    dirName = '/media/gas/Samsung_T5/Datensätze/KinectAufnahmenReduced_CroppedImages'
-
-    #nyu2_train = list()
-    for (dirpath, dirnames, filenames) in os.walk(dirName):
-        for file in filenames:
-            if file.endswith('PCLMask.png'):
-                nyu2_train.append((glob.glob(dirpath + '/*undist.ppm')[0], glob.glob(dirpath + '/*projected.pgm')[0],
-                                   os.path.join(dirpath, file)))
-    print(len(nyu2_train))
-
-
-    dirName = '/media/gas/Samsung_T5/Datensätze/DatasetReduced_CroppedEval'
-
     nyu2_test = list()
-    for (dirpath, dirnames, filenames) in os.walk(dirName):
-        for file in filenames:
-            if file.endswith('New.png'):
-                #print(os.path.join(dirpath + '*undist.ppm'))
-                nyu2_test.append((glob.glob(dirpath + '/*undist.ppm')[0], glob.glob(dirpath + '/*NoOverflow.pgm')[0], os.path.join(dirpath, file)))
-    print(len(nyu2_test))
+    for d,datasetDir in enumerate(datasetDirs):
+        for (dirpath, dirnames, filenames) in os.walk(datasetDir):
+            for file in filenames:
+                if file.endswith('PCLMask.png'):
+                    if d < 2:
+                        nyu2_train.append((glob.glob(dirpath + '/*undist.ppm')[0], glob.glob(dirpath + '/*projected.pgm')[0], os.path.join(dirpath, file)))
+                    else:
+                        nyu2_test.append((glob.glob(dirpath + '/*undist.ppm')[0], glob.glob(dirpath + '/*projected.pgm')[0], os.path.join(dirpath, file)))
+                        
+        if d == 0:
+            nyu2_train = nyu2_train[::4] + nyu2_train[1::4] + nyu2_train[2::4]
 
     shape_rgb = (batch_size, 416,512, 3)
     shape_depth = (batch_size, 208, 256, 3)
@@ -71,7 +50,6 @@ def get_nyu_train_test_data(batch_size):
 
     train_generator = NYU_BasicAugmentRGBSequence(data, nyu2_train, batch_size=batch_size, shape_rgb=shape_rgb, shape_depth=shape_depth)
     test_generator = NYU_BasicRGBSequence(data, nyu2_test, batch_size=batch_size, shape_rgb=shape_rgb, shape_depth=shape_depth)
-
 
     return train_generator, test_generator
 
