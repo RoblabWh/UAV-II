@@ -1,0 +1,2 @@
+./mono /home/gas/ORB_SLAM2/Vocabulary/ORBvoc.txt /home/gas/ORB_SLAM2/config/mavic_1280_720.yaml
+./mono /home/gas/ORB_SLAM2/Vocabulary/ORBvoc.txt /home/gas/ORB_SLAM2/config/tello_960_720.yaml
