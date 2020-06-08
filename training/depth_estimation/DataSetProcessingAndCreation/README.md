@@ -1,6 +1,8 @@
 Collection of Scripts to Read in and process data from a Microsoft Kinect v1 either online from the NYU-dataset or from own data acquisition
 for the purpose of creating a new dataset for the training of Neural Nets to estimate Depth from RGB-Images.
 
+You can use the Matlab-Script kinectData.m for your own data acquisition.
+
 Currently, there are two different Scripts to start the dataset creation: One for processing data from the online-dataset NYU and the oner one
 for processing data from own data acquisition with the Kinect.The reason for that is that the file formats from the two different input sources
 were different and it was the quickiest way to create these two different Scripts which are nearly identical.
