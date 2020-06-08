@@ -18,14 +18,14 @@ After that you should use the launch.sh in ./Docker_ORB2_SLAM/ to launch the con
 
 Use the launch.sh files in ./Docker_ORB2_SLAM/ and in ./Docker_Python/ to start the two containers. In the python container use 
 
-cd ./Mapping
+cd ./Mapping <br>
 python3 main.py --input ~/host/path_to_video 
 
 to launch the mapper
 
 In the ORB2 container use 
 
-cd ./ORB_SLAM2/Examples/Monocular
+cd ./ORB_SLAM2/Examples/Monocular <br>
 ./mono /../../Vocabulary/ORBvoc.txt /../../config/appropriate_config_file.yaml
 
 to launch ORB2.
