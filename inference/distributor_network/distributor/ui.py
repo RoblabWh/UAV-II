@@ -15,7 +15,7 @@ import numpy as np
 import cv2
 
 
-
+# kommunikationsarten
 OptionList = [
 "send",
 "get",
@@ -24,11 +24,13 @@ OptionList = [
 ]
 
 class ui:
+    # Im Konstruktor wird die Gui aufgebaut
     def __init__(self):
         self.window = Tk()
         self.window.title("Distributer Network Konfigurator")
         self.rawData = None
         self.manipulatedData = None
+        #Aufbau der GUI
         self._interface()
 
 
@@ -38,10 +40,12 @@ class ui:
     def mainloop(self):
         self.window.mainloop()
 
+    # Nach einer bestimmten zeit, soll die Liste geupdatet werden, damit z.B.
+    # der Ping angezeigt wird
     def updateList(self, name, ip, port, com, ping):
         liste = self.lstCom.get(1, END)
         found = False
-        index = 1
+        index = 1 # index von 1 wird benötigt, damit die erste Zeile stehen bleibt
         for lname in liste:
             lname = re.sub(' +', ' ', lname)
             lname = lname.split(' ')
@@ -55,25 +59,35 @@ class ui:
                 index += 1
         return found
 
+    """
+    Wenn eine Verbindung aufgebaut werden soll, wird ein Thread erstellt und die
+    eingetragenen Daten werden in einer Liste abgespeichert.
+    """
     def _insert(self):
         #test eingabe
+        #Bekomme die Daten
         ip = self.txt_ip.get()
         port = self.txt_port.get()
         name = self.txt_discribe.get()
         com = self.var.get()
 
+        # Formatieren den String
         txt = "{:^30} {:^30} {:^15} {:^20} {:^30}".format(name, ip, port, com, "0ms")
         #print(txt)
+        # Fuege ein
         self.lstCom.insert(END, txt)
 
         self.txt_discribe.delete(0, END)
         self.txt_port.delete(0, END)
         self.txt_ip.delete(0, END)
 
+        # Starte Thread mit den Konfig einstellungen
         thread = threading.Thread(target=self._worker, args=(name, ip, port, com,))
         thread.start()
 
-
+    """
+    Hauptprogramm des erstellten Threads
+    """
     def _worker(self, name, ip, port, com):
         net = network.network(name, ip, port, com)
         count = 0
@@ -122,15 +136,20 @@ class ui:
     def getManipulatedData(self):
         return self.manipulatedData
 
+    # Funktion zum Fusionieren der Rohdaten und der Manipulierten Daten
+    # Es werden die beiden Bilder mit der Overlay-Funktion der opencv fusioniert
     def setManipulatedData(self, img):
         alpha = 0.3
         beta = 1.0 - alpha
         manipulatedData = img
         if(self.getRawData() is not None):
+            # entschlüsseln der Daten
             array = np.frombuffer(self.getRawData(), np.dtype('uint8'))
             raw = cv2.imdecode(array, 1)
+            # entschlüsseln der Daten
             array = np.frombuffer(manipulatedData, np.dtype('uint8'))
             man = cv2.imdecode(array, 1)
+            # Overlay
             manipulatedData = cv2.addWeighted(raw, alpha, man, beta, 0.0)
             self.manipulatedData = manipulatedData
         if(manipulatedData is not None):
@@ -189,7 +208,7 @@ class ui:
         '''
         btn_close = Button(text="Verbindung trennen", command=self._closeConnection).grid(column=0, row=5, columnspan=6)
 
-
+    # Schließt die ausgewaehlte Verbindung
     def _closeConnection(self):
         liste = self.lstCom.curselection()
         if(liste[0] != 0):

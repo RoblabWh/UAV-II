@@ -4,8 +4,15 @@ import sys
 import cv2
 import numpy as np
 
+"""
+Hier wird die Klasse Distributor erstellt, die auf einen Port und eine IP lauscht.
 
+Es muss daher die Kommunikation aus dem UAV-Netz und den Endgeräten her aufgebaut werden.
+
+Ist ein veraltetes Modul
+"""
 class Distributer:
+    #Konstuktor
     def __init__(self, ip_uav, port_uav, ip_dist, port_dist):
         self.ip_uav = ip_uav
         self.port_uav = port_uav
@@ -14,11 +21,17 @@ class Distributer:
         self.listen = None
         self.send = None
 
+    # Wenn Objekt gelöscht wird, schließe die Sockets
     def __del__(self):
         self.listen.close
         self.send.close
         print('destructor called')
 
+    """
+    Das ist die Hauptschleife, hier werden zunächst die Sockets erstellt und
+    anschließend wird in einer endlosschleife auf den Ports gelauscht und versucht
+    die Kameradaten der Drohne zu empfangen und an die Endgeräte zu senden.
+    """
     def run(self):
         self.listen = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         uav_network = (self.ip_uav, self.port_uav)
@@ -73,7 +86,7 @@ class Distributer:
                 continue
             except:
                 break
-
+# Main Funktion, erstelle Objekt und starte das Programm
 def main():
     uav_ip = '172.16.35.169'
     uav_port = 5555
