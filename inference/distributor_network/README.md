@@ -9,6 +9,6 @@ Folgende KI-Verfahren werden verwendet:
 Darüber hinaus ist in diesem Verzeichnis das Programm 
 * *Distributor*
 
-zu finden. Dieses Programm ist ein Configurator und ist die Schnittstelle zwischen dem UAV-Network und dem Distributor-Network.
+zu finden. Dieses Programm ist ein Konfigurator und ist die Schnittstelle zwischen dem UAV-Network und dem Distributor-Network.
 
 ![GitHub Logo](distributor.png)
