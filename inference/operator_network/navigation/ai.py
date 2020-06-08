@@ -86,11 +86,10 @@ class ai:
                     # calculate orientation command
                     propability_orientation = left_propability_orientation - right_propability_orientation
                     # generate string command for drone
-                    rc_drone_command = "rc 0 " + str(int(forward_propability_orientation * self.scaling)) + " 0 " + str(
-
-                        int(propability_orientation * self.scaling))
+                    rc_drone_command = "rc 0 " + str(int(forward_propability_orientation * self.scaling)) + " 0 " + str(int(propability_orientation * self.scaling))
                     # send command to drone
                     self.drone.send_command(rc_drone_command)
+                    # reset pseduo waiting
                     i = 0
             except:
                 print("Unexpected error:", sys.exc_info()[0])
