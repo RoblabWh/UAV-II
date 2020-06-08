@@ -6,7 +6,7 @@ You can use the Matlab-Script kinectData.m for your own data acquisition.
 Currently, there are two different Scripts to start the dataset creation: One for processing data from the online-dataset NYU and the oner one
 for processing data from own data acquisition with the Kinect.The reason for that is that the file formats from the two different input sources
 were different and it was the quickiest way to create these two different Scripts which are nearly identical.
-Of course, this is not a clean solution and has to be refined in a later.
+Of course, this is not a clean solution and has to be refined in a later version.
 
 ########### First starter Script ##################
 The first starter Script is the DataProcessing_NYUData.py. It relies on the URL-list specified in the ListOfURLS.py which are links
@@ -28,12 +28,12 @@ It further creates a .npy-File which holds the actual PCL.
 ########### Second starter Script ##################
 The second starter Script is nearly identical to the first one. The only difference is that it doesnt load files from the internet.
 Instead it operates directly on the data directory created by some data acquisition process.
-For speed acceleration this task is distributed on 4 indepentend processes using pythons multiprocessing API.
+For speed acceleration this task is distributed on 4 independent processes using pythons multiprocessing API.
 This speeds up the processing time up to 4 times but requires that you seperate the original input directory into 4 seperate ones.
 
-The resultings paths have to be adjusted in the script.
+The resulting paths have to be adjusted in the script.
 
-Another difference is that it import the CameraParams.py instead of the NYUCameraParams.py. Here we had inserted parameters which we
+Another difference is that it imports the CameraParams.py instead of the NYUCameraParams.py. Here we have inserted parameters which we
 got from a Kinect-Calibration under Linux with the Stereo Calibration Toolset from the MRPT-Software.
 
 Everything else remains identicial to the first Starter script, including the necessity to specify the output directory.
