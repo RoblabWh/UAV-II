@@ -12,8 +12,8 @@ Zum installieren der benöitgten Packete den Befehl `sudo -H pip3 install -r req
 ## Running Programm
 
 Diese Semantische Segmentierung unterstützt zwei Datensätze:
-1.) Pascal VOC
-2.) Pascal Person Part
+1. Pascal VOC
+2. Pascal Person Part
 
 Zum Ausführen der Programme folgende Befehle eingeben:
 
