@@ -1,5 +1,5 @@
 Software: Minimum prerequisites:
-Dataset from the UAV-II-Dataset processing routines. We expect three directories which contains different parts of the dataset:
+Dataset from the UAV-II-Dataset processing routines. We expect three directories which contain different parts of the dataset:
 1) A path to the TRAINING data from the Indoor-NYU dataset 
 2) A path to the EVALUATION data from the Indoor-NYU dataset
 NOTE HERE: Your need to specify such a path and you need to have the same directory structure as in the other parts. But the evaluation part is the LEAST interesting one because a quantitative evaluation is of little interest up to this point of model development.
