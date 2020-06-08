@@ -28,14 +28,14 @@ Wie beschrieben wurde das Programm in Tkinter entwickelt. Dabei wurden drei Pyth
 * main.py
 * network.py
 ```
-+ Das Main-Modul startet das Distributor Programm.
-+ Das ui-Modul stellt eine Klasse bereit die die Grafische Oberfläche erstellt. Außerdem erstellt dieses Modul für jede Verbindung die Aufgebaut werden soll ein Thread. Es wurden hier ausschließlich Threads gewählt, da Threads leichtgewichtiger sind und schneller erzeugt werden können als Prozesse.
+- Das Main-Modul startet das Distributor Programm.
+- Das ui-Modul stellt eine Klasse bereit die die Grafische Oberfläche erstellt. Außerdem erstellt dieses Modul für jede Verbindung die Aufgebaut werden soll ein Thread. Es wurden hier ausschließlich Threads gewählt, da Threads leichtgewichtiger sind und schneller erzeugt werden können als Prozesse.
 Das network-Modul enthält eine Schnittstelle zum Kommunikationsaufbau in die jeweiligen Netze
 
 Für die Datei *distributer.py* siehe Abschnitt [Old](#old)
 ## Oberfläche
 In diesem Abschnitt wird die Grafische Benutzeroberfläche anhand eines Bildes beschrieben.
-![Bild konnte nicht geladen werden](ReadmeBilder/Mit Bezeichnung.png)
+![Bild konnte nicht geladen werden](ReadmeBilder/MitBezeichnung.png)
 ## Kommunikationsart
 Wie im Abschnitt zu sehen ist, gibt es mehrere Kommunikationsarten. Diese sind
 * Send
@@ -43,11 +43,11 @@ Wie im Abschnitt zu sehen ist, gibt es mehrere Kommunikationsarten. Diese sind
 * Both-UAV
 * Both-Dist
 
-+ Mit *get* holt sich der Distributor die Rohdaten von der Drohne und speichert diese zwischen.
-+ Mit *send* werden die Rohdaten an die Endgeräte gesendet.
+- Mit *get* holt sich der Distributor die Rohdaten von der Drohne und speichert diese zwischen.
+- Mit *send* werden die Rohdaten an die Endgeräte gesendet.
 ![Bild konnte nicht geladen werden](ReadmeBilder/Send&get.png)
-+ Mit *Both-Dist* werden die Rohdaten an die Endgeräte gesendet und das Verarbeitete Bild auf dem Endgerät wird zurückgesendet. Dieses Bearbeitete Bild, wird mit dem Rohbild Fusioniert, um Informationen anzuzeigen.
-+ Mit *Both-UAV* holt sich der Distributor die Rohdaten von der Drohne und sendet die Fusionierten Bilder in das UAV-Netzwerk bzw. an den Operator, um diesen zu unterstützen.
+- Mit *Both-Dist* werden die Rohdaten an die Endgeräte gesendet und das Verarbeitete Bild auf dem Endgerät wird zurückgesendet. Dieses Bearbeitete Bild, wird mit dem Rohbild Fusioniert, um Informationen anzuzeigen.
+- Mit *Both-UAV* holt sich der Distributor die Rohdaten von der Drohne und sendet die Fusionierten Bilder in das UAV-Netzwerk bzw. an den Operator, um diesen zu unterstützen.
 ![Bild konnte nicht geladen werden](ReadmeBilder/Both.png)
 # Verwendung
 Sind die benötigten Abhängigkeiten installiert, kann das Programm mit dem Befehl
