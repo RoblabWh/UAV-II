@@ -11,6 +11,7 @@ __maintainer__ = "Artur Leinweber"
 __email__ = "artur.leinweber@studmail.w-hs.de"
 __status__ = "Production"
 
+# libraries
 import sys
 import time
 
@@ -70,8 +71,10 @@ class ai:
 
         while self.running:
             try:
+                # get frame from drone,convert to grayscale, resize to 101x101 and normalize
                 frame = cv2.cvtColor(cv2.resize(drone.getFrame(), (101, 101)), cv2.COLOR_RGB2GRAY) / 255.0
 
+                # get prediction from cnn
                 control_data_propability_orientation = self.cnn_orientation.predict(np.expand_dims(np.expand_dims(frame, axis=0), axis=3))
 
                 left_propability_orientation = control_data_propability_orientation[DIMENSION][LEFT]
@@ -80,14 +83,19 @@ class ai:
 
                 i += 1
                 if i == self.theta:
+                    # calculate orientation command
                     propability_orientation = left_propability_orientation - right_propability_orientation
+                    # generate string command for drone
                     rc_drone_command = "rc 0 " + str(int(forward_propability_orientation * self.scaling)) + " 0 " + str(
 
                         int(propability_orientation * self.scaling))
+                    # send command to drone
                     self.drone.send_command(rc_drone_command)
                     i = 0
             except:
                 print("Unexpected error:", sys.exc_info()[0])
+                # if something goes wrong, send landing command to drone
                 self.drone.send_command("land")
 
+            # watchdog command
             drone.send_command("command")
