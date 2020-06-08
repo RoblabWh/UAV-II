@@ -35,7 +35,7 @@ Das network-Modul enthält eine Schnittstelle zum Kommunikationsaufbau in die je
 Für die Datei *distributer.py* siehe Abschnitt [Old](#old)
 ## Oberfläche
 In diesem Abschnitt wird die Grafische Benutzeroberfläche anhand eines Bildes beschrieben.
-![Bild konnte nicht geladen werden](ReadmeBilder/MitBezeichnung.png)
+![Bild konnte nicht geladen werden](ReadmeBilder/MitBezeichnungen.png)
 ## Kommunikationsart
 Wie im Abschnitt zu sehen ist, gibt es mehrere Kommunikationsarten. Diese sind
 * Send
