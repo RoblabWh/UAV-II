@@ -1,6 +1,6 @@
 # Verwendung der Graphen
 
-Um die gesplitteten Graphen verwenden zu können, müssen diese zunächst erneut zusammengefügt werden. Die hierfür benötigten Befehle sind unter dem Pfad [Link] zu finden.  
+Um die gesplitteten Graphen verwenden zu können, müssen diese zunächst erneut zusammengefügt werden. Die hierfür benötigten Befehle sind unter [diesem Pfad](https://github.com/RoblabWh/UAV-II/tree/master/inference/distributor_network/object_detection/warning_signs_graph) zu finden.  
 
 Anschließend müssen die Jupyter-Notebooks von [hier](https://github.com/RoblabWh/UAV-II/tree/master/training/object_detection/jupyter_notebooks_for_using_models) heruntergeladen werden, damit die Graphen verwendet werden können.
 
