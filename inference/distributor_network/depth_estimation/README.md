@@ -2,7 +2,7 @@ Modelle können hier heruntergeladen werden: https://w-hs.sciebo.de/s/6UUXN3nf6h
 
 Videos für Inference können hier heruntergeladen werden:https://w-hs.sciebo.de/s/6UUXN3nf6hpJ3iJ?path=%2FSoftwareprojekte%2FUAV-II%2FSoftwareprojekt%20Videos%2FDepthEstimation
 
-Ein Docker-Container zur Ausführung des Neuronales Netzes zur Generierung von Tiefenbildern aus 2D-Farbbildern, zur Visualisierung der Netzausgabe und daraus generierter Punktwolken sowie für SLAM.
+Ein Docker-Container zur Ausführung des Neuronalen Netzes zur Generierung von Tiefenbildern aus 2D-Farbbildern, zur Visualisierung der Netzausgabe und daraus generierter Punktwolken sowie für SLAM.
 
 
 
