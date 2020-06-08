@@ -1,4 +1,4 @@
-![GitHub Logo](Topology_UAVII.png)
+![GitHub Logo](operator.png)
 
 # Operator
 ## Getting Started
