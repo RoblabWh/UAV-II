@@ -22,6 +22,7 @@ import drone
 
 
 class ai:
+    # Constants
     LEFT = 0
     FORWARD = 1
     RIGHT = 2
@@ -29,10 +30,19 @@ class ai:
 
 
     def __init__(self, drone):
-        self.cnn_orientation = tf.keras.models.load_model("./gray.h5")
+        # load CNN model for autonomous corridor flight
+        self.cnn_orientation = tf.keras.models.load_model("../../../../training/localization_navigation/checkpoints/corridor_weights00000181.h5")
+        
+        # pseudo waiting
         self.theta = 8
+        
+        # scale factor for commands 
         self.scaling = 40
+        
+        # status of the thread
         self.running = True
+        
+        # drone object
         self.drone = drone
 
 
@@ -41,15 +51,21 @@ class ai:
 
 
     def run(self):
+        # disable mission pad detection
         self.drone.send_command("moff")
+        
         time.sleep(2)
+        # rotate 0 degrees clockwise.
         self.drone.send_command("cw 0")
 
-
         time.sleep(7)
+        # ascend to 50 cm.
         self.drone.send_command("up 50")
+        
         time.sleep(5)
+        # set speed to 20 cm/s.
         self.drone.send_command("speed 20")
+        
         i = 0
 
         while self.running:
