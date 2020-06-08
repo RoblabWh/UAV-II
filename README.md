@@ -1,6 +1,6 @@
 # UAV II - Einsatz von KI im Gefahrenbereich
 Das Verzeichnis „training“ beinhaltet die Dateien und Quellcode, die zum trainieren der Verfahren verwendet wurden.
-In dem „inference“ Verzeichnis befindet sich Quellcode, der zur Ausführung gebracht werden kann, um die Verfahren aus dem Projekte zu starten.  
+In dem „inference“ Verzeichnis befindet sich Quellcode, der zur Ausführung gebracht werden kann, um die Verfahren zu starten.  
 ## Problemstellung
 * Könnte die Drohne bei Konzentrationsverlust des Operators mithilfe eines Deep Learning Verfahrens selbstständig navigieren?
 * Könnten Gegenstände und Personen im Gefahrenbereich dann auch mithilfe von Deep Learning automatisch erkannt werden?
