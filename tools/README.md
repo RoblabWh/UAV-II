@@ -1,2 +1,2 @@
 # Tools
-Dieses Verzeichnis beinhaltet Tools, die anfangs während des Softwareprojektes verwendet wurden. 
+Dieses Verzeichnis beinhaltet Tools, die anfangs für das Softwareprojektes verwendet wurden. 
