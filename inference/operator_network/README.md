@@ -61,7 +61,7 @@ Das Drohnen Modul ist die Schnittstelle um eine Verbindung mit der Drohne aufzub
 ## User_interface
 Das User_interface enthält das Modul *ui.py* welches ein Objekt erstellt, um die Grafische Benutzeroberfläche darzustellen. Zudem baut die *ui* eine Verbindung mit der Drohne über das Modul *drone.py* auf und speichert das erhaltene Kamerabild als Hintergund Bild in der GUI ab. Die GUI wurde mit Tkinter erstellt.
 Gleichzeitig startet das Modul eine Netzwerkverbindung und horcht auf den Port 5555
-![Foto konnte nicht geladen werden](hithubImages/Operator.png)
+![Foto konnte nicht geladen werden](githubImages/Operator.png)
 
 # Verwendung
 Der Operator kann mit dem Befehl
