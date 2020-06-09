@@ -20,7 +20,11 @@ from utils.helpers import prepare_img
 from PIL import Image
 
 NUM_CLASSES = 21
+"""
+Filter Konfigurator
 
+Background always auf True
+"""
 voc_dataset = {"background" : True, "aeroplane": False, "bicycle": False, "bird": False, "boat": False, "bottle": True, "bus": False, \
                "car": False, "cat": False, "chair": True, "cow": False, "diningtable": True, "dog": True, "horse": False, "motorbike": False, \
                "person": True, "pottedplant": True, "sheep": False, "sofa": True, "train": False, "tvmonitor": True}

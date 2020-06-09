@@ -17,6 +17,11 @@ from PIL import Image
 
 NUM_CLASSES = 7
 
+"""
+Filter Konfigurator
+
+Background always auf True
+"""
 person_dataset = {"background" : True, "head": True, "upper body": True, "upper arm": True, "lowerarm": True, "upper legs": True, "lower legs": True}
 
 class SemanticSegmentation:
@@ -262,7 +267,7 @@ def main():
     if(mode=="listen"):
         person.listener()
     if(mode=="saveVideo"):
-        voc.saveVideo(file=inputFile, name=outputFile, scale_percent=scale_factor)
+        person.saveVideo(file=inputFile, name=outputFile, scale_percent=scale_factor)
 
     #person = SemanticSegmentation()
     #person.filter(person_dataset)

@@ -53,29 +53,29 @@ gestartet werden. Dabei wird Zugriff auf die Webcam genommen und das Bild mittel
 
 Folgend sind die Parameter für die Datei **personpart.py** aufgelistet und ihre Einstellmöglichkeiten:
 ````
-* --model person50
-  * person50 (default)
-  * person101
-  * person152
-* --scale_factor 1
-  * 1 (default)
-  * 0.99
-  * ...
-  * 0
-* --host_ip None
-  * Ip-Adresse
-* --port None
-  * Port
-* --cmap 'cmap.npy'
-  * Pfad zur cmap.npy
-* --mode webcam
-  * webcam (default)
-  * listen
-  * saveVideo
-* --InputFile None
-  * Pfad zum Video was bearbeitet werden soll
-* --OutputFile None
-  * Name zu schreibenden Datei. Diese wird in OutputVideos geschrieben
+ --model person50
+   person50 (default)
+   person101
+   person152
+ --scale_factor 1
+   1 (default)
+   0.99
+   ...
+   0
+ --host_ip None
+   Ip-Adresse
+ --port None
+   Port
+ --cmap 'cmap.npy'
+   Pfad zur cmap.npy
+ --mode webcam
+   webcam (default)
+   listen
+   saveVideo
+ --InputFile None
+   Pfad zum Video was bearbeitet werden soll
+ --OutputFile None
+   Name zu schreibenden Datei. Diese wird in OutputVideos geschrieben
 ````
 
 Mit dem Parameter *--model* wird entschieden welches Model ausgeführt werden soll.
@@ -86,6 +86,8 @@ Mit dem Parameter *--cmap* kann bestimmt werden welche cmap verwendet wird
 Mit dem Parameter *--mode* kann der Modus bestimmt werden, was gemacht werden soll. Dabei wird zwischen Webcam, listen und saveVideo unterschieden.
 Mit dem Parameter *--InputFile* kann das Video bestimmt werden, welches bearbeitet werden soll.
 Mit dem Parameter *--OutputFile* kann der Name der AusgabeDatei bestimmt werden. Das bearbeitete Video ist dann im Ordner videoOutput zu finden
+
+Es ist Außerdem zu erwähnen das in dem Programm ein Filter Programmiert wurde, sodass es Möglich ist manche Label zu deaktivieren. Dies ist Möglich, wenn das Modul *personpart.py* geöffnet wird und oben in dem Datensatz die passenden Variablen auf False gesetzt werden.
 
 ## Pascal VOC
 Das Modul personpart.py kann mit dem Befehl
@@ -96,30 +98,30 @@ gestartet werden. Dabei wird Zugriff auf die Webcam genommen und das Bild mittel
 
 Folgend sind die Parameter für die Datei **voc.py** aufgelistet und ihre Einstellmöglichkeiten:
 ````
-* --model voc50
-  * voc50 (default)
-  * voc101
-  * voc152
-  * vocmb
-* --scale_factor 1
-  * 1 (default)
-  * 0.99
-  * ...
-  * 0
-* --host_ip None
-  * Ip-Adresse
-* --port None
-  * Port
-* --cmap 'cmap.npy'
-  * Pfad zur cmap.npy
-* --mode webcam
-  * webcam (default)
-  * listen
-  * saveVideo
-* --InputFile None
-  * Pfad zum Video was bearbeitet werden soll
-* --OutputFile None
-  * Name zu schreibenden Datei. Diese wird in OutputVideos geschrieben
+ --model voc50
+   voc50 (default)
+   voc101
+   voc152
+   vocmb
+ --scale_factor 1
+   1 (default)
+   0.99
+   ...
+   0
+ --host_ip None
+   Ip-Adresse
+ --port None
+   Port
+ --cmap 'cmap.npy'
+   Pfad zur cmap.npy
+ --mode webcam
+   webcam (default)
+   listen
+   saveVideo
+ --InputFile None
+   Pfad zum Video was bearbeitet werden soll
+ --OutputFile None
+   Name zu schreibenden Datei. Diese wird in OutputVideos geschrieben
 ````
 
 Mit dem Parameter *--model* wird entschieden welches Model ausgeführt werden soll.
@@ -130,3 +132,5 @@ Mit dem Parameter *--cmap* kann bestimmt werden welche cmap verwendet wird
 Mit dem Parameter *--mode* kann der Modus bestimmt werden, was gemacht werden soll. Dabei wird zwischen Webcam, listen und saveVideo unterschieden.
 Mit dem Parameter *--InputFile* kann das Video bestimmt werden, welches bearbeitet werden soll.
 Mit dem Parameter *--OutputFile* kann der Name der AusgabeDatei bestimmt werden. Das bearbeitete Video ist dann im Ordner videoOutput zu finden
+
+Es ist Außerdem zu erwähnen das in dem Programm ein Filter Programmiert wurde, sodass es Möglich ist manche Label zu deaktivieren. Dies ist Möglich, wenn das Modul *voc.py* geöffnet wird und oben in dem Datensatz die passenden Variablen auf False gesetzt werden.
