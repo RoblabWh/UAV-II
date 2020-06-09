@@ -31,6 +31,7 @@ In diesem Abschnitt werden die  Funktionalitäten der Moudle *Tello*, *Joystick*
 ## Joystick
 In dem Verzeichnis existiert ein Modul:
 * Joystick.py
+
 Dieses Modul wurde mit Pygame entwickelt und stellt eine Klasse bereit, welches beim erstellen eines Objektes nach verfügbaren bzw. unterstützten Controllern sucht. Unterstützte Controller sind:
 * PS3
 * PS4
@@ -45,11 +46,13 @@ Wird ein unterstützer Controller gefunden, können mit der `run` Funktion des O
 In diesem Verzeichnis sind Zwei Module die für diese Projekt relevant sind. Diese sind
 * drone.py
 * libh264decoder.so
+
 Die *libh264decoder.so* Datei wird benötigt um die Verschlüsselten bzw. Komprimierten Kameradaten der DJI Tello zu Entschlüsseln.
 Das Drohnen Modul ist die Schnittstelle um eine Verbindung mit der Drohne aufzubauen. Diese Verbindung wird mit dem DJI-SDK 2.0 realisiert. Die SDK Architektur basiert auf drei Säulen
 * Send & Receive Commands
 * Tello State
 * Videostream
+
 ![Foto konnte nicht geladen werden](githubImages/SDK.png)
 - Bei *Send & Receive Commands* wird eine Verbindung zu der Drohne aufgebaut und es können der Drohne Befehle mitgeteilt werden.
 - Bei der *Tello State* werden periodisch Informationen von der Drohne Empfangen, wie z.B. der Batteriestatus, die Beschleunigung der einzelnen Achsen, etc.
