@@ -6,8 +6,8 @@
    * [Installation](#installation)
    * [Realisierung](#realisierung)
    * [Anwendung](#anwendung)
-      * [Pascal Person-Part](#pascal Person-part)
-      * [Pascal VOC](#pascal VOC)
+      * [Pascal Person-Part](#pascalPerson-part)
+      * [Pascal VOC](#pascalVOC)
 <!--te-->
 
 
