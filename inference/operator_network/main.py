@@ -1,6 +1,7 @@
 import sys
 import os
 #print(os.getcwd())
+# Fuegt die einzelnen Pfade dem Programm hinzu, damit die Module gefunden werden können
 sys.path.append(os.getcwd() + '/tello')
 sys.path.append(os.getcwd() + '/user_interface')
 #sys.path.append(os.getcwd() + '/network_interface')

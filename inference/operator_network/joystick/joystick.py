@@ -209,6 +209,9 @@ class joystick:
         pygame.joystick.init()
         #self._verifyJostick()
 
+    """
+    Prüft welcher Joystick angeschlossen Ist
+    """
     def _verifyJostick(self):
         try:
             js = pygame.joystick.Joystick(0)
@@ -238,6 +241,10 @@ class joystick:
     def __del__(self):
         self.running = False
 
+    """
+    Wird benötigt, um den Timeout der Verbindung zur Drohne zu ändern.
+    Ist der Timeout nämlich zu hoch gewählt, kann das zur Intabilität führen!
+    """
     def turnoff(self):
         self.running = False
         self.drone.set_joystick(False)

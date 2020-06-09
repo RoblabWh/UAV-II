@@ -52,7 +52,7 @@ class UI:
         self.btn_ai = tki.Button(self.root, text="AI einschalten", command=self.operatorControl)
         self.btn_ai.pack(side="bottom", fill="both", expand="no", padx=10, pady=5)
 
-        """ 
+        """
             start a thread that constanly pools the video sensor for the most recently read frame
         """
         self.stopEvent = threading.Event()
@@ -142,7 +142,7 @@ class UI:
             if cv.waitKey(1) & 0xFF == ord('q'):
                 pass
 
-    """Todo: Anpassen der text Ausrichtungen!!!"""
+    """ Anpassen der text Ausrichtungen!!!"""
     def _getFrame(self, frame):
         text = []
         color = (0, 0, 0)
