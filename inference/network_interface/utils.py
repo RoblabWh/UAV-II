@@ -2,6 +2,9 @@ import cv2
 import socket
 import numpy as np
 
+"""
+Initialisiere die Socket-Verbindung
+"""
 def init_listen():
     host = ''
     port = 5555
@@ -14,6 +17,11 @@ def init_listen():
 
     return sock
 
+"""
+Listen auf den Port 5555
+
+Diese Funktion muss in einer MainLoop eingebaut werden damit ein Ständiges horchen auf dem Port möglich ist.
+"""
 def listen(sock):
     try:
         data, address = sock.recvfrom(65507)

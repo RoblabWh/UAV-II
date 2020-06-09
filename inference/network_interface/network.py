@@ -2,17 +2,27 @@ import cv2
 import socket
 import numpy as np
 
-""" Bitte verwenden!!! """
+"""
+Bitte verwenden!!!
+
+Die Kameradaten der Drohne sind zunächst falsch kodiert (BGR) und müssen in GBR gewandelt werden.
+"""
 def convBGRtoRGB(frame):
     b, g, r = cv2.split(frame)
     frame = cv2.merge((r, g, b))
     return frame
 
+""" Funktion zum Komprimieren von Bildern """
 def cv2_encode_image(cv2_img, jpeg_quality=50):
     encode_params = [int(cv2.IMWRITE_JPEG_QUALITY), jpeg_quality]
     result, buf = cv2.imencode('.jpg', cv2_img, encode_params)
     return buf.tobytes()
 
+"""
+Funktion der Drohne
+
+Diese Funktion wird von der Drohne aufgerufen. Sie lauscht auf dem Port 5555 und wartet darauf, dass eine Verbindung von Seiten des Distributor erstellt wird.
+"""
 def video_server(drone):
     host = ''
     port = 5555
@@ -31,6 +41,8 @@ def video_server(drone):
 
     sock.bind(server_address)
 
+
+    # Lauf solange, bis der Operator abgeschaltet wird.
     while(keep_running):
         keep_running = not drone.terminate
         try:
@@ -95,7 +107,7 @@ def video_server(drone):
                 continue
             # We send back the buffer to the client
             sock.sendto(buffer, address)
-            
+
         for client in clients:
             if(address == client):
                 array = np.frombuffer(img, dtype=np.dtype('uint8'))
