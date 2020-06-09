@@ -233,7 +233,7 @@ class SemanticSegmentation:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('--model', type=str, default=voc50)
+    parser.add_argument('--model', type=str, default=person50)
     parser.add_argument('--scale_factor', type=float, default=0.7125)
     parser.add_argument('--host_ip', type=str, default=None)
     parser.add_argument('--port', type=int, default=None)
