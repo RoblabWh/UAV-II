@@ -72,6 +72,9 @@ class SemanticSegmentation:
             model[key] = net
         return model
 
+    """
+    Hier wird die Segmentierung ausgeführt und zurückgegeben
+    """
     def segmentation(self, frame):
         imageSize = frame.shape[:2][::-1]
         img_inp = torch.tensor(prepare_img(frame).transpose(2, 0, 1)[None]).float()
@@ -85,6 +88,9 @@ class SemanticSegmentation:
             segm = self.cmap[segm.argmax(axis=2).astype(np.uint8)]
         return segm
 
+    """
+    Funktion zum Anzeigen von Images auf dem Bildschirm. Es können dazu auch noch die Labels Angezeigt werden.
+    """
     def showImage(self, name, image, showAgenda=False):
         if (showAgenda):
             text_width = 10
