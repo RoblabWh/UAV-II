@@ -146,15 +146,18 @@ class SemanticSegmentation:
         cv2.destroyAllWindows()
 
 
-    def saveVideo(self):
+    def saveVideo(self, file='15_39_16.avi', name=None,scale_percent=30):
         alpha = 0.3
         beta = (1.0 - alpha)
         path='videoOutput/'
-        outputname='output'
-        scale_percent = 50  # percent of original size
+        if(name is None):
+            outputname='output'
+        else:
+            outputname=name
+          # percent of original size
 
 
-        cap = cv2.VideoCapture('15_39_16.avi')
+        cap = cv2.VideoCapture(file)
         while(not cap.isOpened()):
             pass
         ret, frame = cap.read()
@@ -174,7 +177,7 @@ class SemanticSegmentation:
 
         start_time = int(round(time.time() * 1000))
         #print('' + path + outputname + 'overlay/.avi')
-
+        print("Start")
         while(ret):
             """try:"""
             frame = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
@@ -229,9 +232,41 @@ class SemanticSegmentation:
         cv2.imwrite('segmPP.jpg', segm)
 
 def main():
-    person = SemanticSegmentation()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--model', type=str, default=voc50)
+    parser.add_argument('--scale_factor', type=float, default=0.7125)
+    parser.add_argument('--host_ip', type=str, default=None)
+    parser.add_argument('--port', type=int, default=None)
+    parser.add_argument('--cmap', type=str, default='cmap.npy')
+    parser.add_argument('--mode', type=str, default='webcam')
+    parser.add_argument('--InputFile', type=str, default=None)
+    parser.add_argument('--OutputFile', type=str, default=None)
+
+    args = parser.parse_args()
+    # Parse die Befehle
+    model=args.model
+    scalte_factor=args.scale_factor
+    ip=args.host_ip
+    port=args.port
+    cmap=args.cmap
+    mode=args.mode
+    inputFile=args.InputFile
+    outputFile=args.OutputFile
+
+    #Erstelle das Objekt
+    person = SemanticSegmentation(cmap=cmap, modelName=model, host_ip=ip, port=port)
     person.filter(person_dataset)
-    person.testImage()
+    #Wähle Modus
+    if(mode=="webcam"):
+        person.showWebcam()
+    if(mode=="listen"):
+        person.listener()
+    if(mode=="saveVideo"):
+        voc.saveVideo(file=inputFile, name=outputFile, scale_percent=scale_factor)
+
+    #person = SemanticSegmentation()
+    #person.filter(person_dataset)
+    #person.testImage()
     #person.showWebcam()
     #voc.listener()
 

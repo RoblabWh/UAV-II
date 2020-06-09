@@ -51,5 +51,5 @@ das Training gestartet werden. Es ist dabei zu erwähnen, das die Daten bzw. all
 Das Training erwieß sich als äußerst schwer und zeigte, dass das Training nach wenigen hundert Epochen ins Overvitting geht. Es ist daraus zu schließen, dass ein Netz mit noch mehr Hidden Layer benötigt wird oder die Hyperparameter sehr sensibel sind.
 
 Hier sind die Trainingsergebnisse.
-![Foto konnte nicht geladen werden](githubImages/Erg.png)
-![Foto konnte nicht geladen werden](githubImages/tabelle.png)
+![Foto konnte nicht geladen werden](ReadmeImages/Erg.png)
+![Foto konnte nicht geladen werden](ReadmeImages/tabelle.png)
