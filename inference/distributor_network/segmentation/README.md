@@ -6,8 +6,8 @@
    * [Installation](#installation)
    * [Realisierung](#realisierung)
    * [Anwendung](#anwendung)
-      * [Pascal Person-Part](#pascalPerson-part)
-      * [Pascal VOC](#pascalVOC)
+      * [Person-Part](#person-part)
+      * [PascalVOC](#pascalVOC)
 <!--te-->
 
 
@@ -45,7 +45,7 @@ Das Modul *voc.py* wurde auf 21 Unterschiedliche Klassen Trainiert.
 # Anwendung
 In diesem Abschnitt wird beschrieben, wie die einzelnen Module verwendet werden können.
 
-## [Pascal Person-Part](#pascalPerson-part)
+## Person-Part
 Das Modul personpart.py kann mit dem Befehl
 ````
 python3 personpart.py
@@ -90,7 +90,7 @@ Mit dem Parameter *--OutputFile* kann der Name der AusgabeDatei bestimmt werden.
 
 Es ist Außerdem zu erwähnen das in dem Programm ein Filter Programmiert wurde, sodass es Möglich ist manche Label zu deaktivieren. Dies ist Möglich, wenn das Modul *personpart.py* geöffnet wird und oben in dem Datensatz die passenden Variablen auf False gesetzt werden.
 
-## Pascal VOC
+## PascalVOC
 Das Modul personpart.py kann mit dem Befehl
 ````
 python3 voc.py
