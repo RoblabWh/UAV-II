@@ -6,9 +6,10 @@
    * [Installation](#installation)
    * [Realisierung](#realisierung)
    * [Anwendung](#anwendung)
-     * [Pascal Person-Part](#pascal person-part)
-     * [Pascal VOC](#pascal voc)
+      * [Pascal Person-Part](#pascal Person-part)
+      * [Pascal VOC](#pascal VOC)
 <!--te-->
+
 
 # Einleitung
 In diesem Verzeichnis wird beschrieben, wie die Semantische Segmentierung verwendet werden kann.
