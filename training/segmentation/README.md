@@ -30,7 +30,7 @@ python src/setup.py build_ext --build-lib=./src/
 Im Ordner Dataaugmenation ist ein Jupyter Notebook zu finden, welches genutzt wurde um den Pascal VOC Datensatz mittes Dataaugmenation zu erweitern. Dabei wurde alle Raw Bilder als auch Label im Uhrzeigersinn, drei mal um 90° rotiert. Anschließend wurden das Original geflippt und ebenfalls auf die selbe weise rotiert. Dadurch wurde aus dem Datensatz mit jeweils 2913 Labeln & Raw Images, 23304 Bilder in beidne Kategorien.
 Da bei der Semantischen Segmentierung die Bilder verschlüsselt sein müssen, können die Label so nicht genutzt werden und müssen daher eigenhändig Kodiert werden. Dafür wurde eine Colorap (cmap.npy) genutzt. Diese Bildet den Farbwert des Labels auf eine Zahl ab, wodurch zum schluss nur ein Grauwertbild übrig bleibt.
 
-![Foto konnte nicht geladen werden](githubImages/BGR.jpg)
+
 ![Foto konnte nicht geladen werden](githubImages/Label.png)
 ![Foto konnte nicht geladen werden](githubImages/Encode.png)
 
